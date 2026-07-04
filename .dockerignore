@@ -1,0 +1,16 @@
+.git
+.gitignore
+.chrome-debug/
+.chrome-headless/
+admin/
+assets/
+scripts/
+server/bin/
+server/obj/
+server/App_Data/
+server/appsettings.Local.json
+cloudflared-err.log
+cloudflared-out.log
+ngrok-err.log
+ngrok-out.log
+*.log
