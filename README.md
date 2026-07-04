@@ -1,228 +1,247 @@
-# Bhai G & Cafe — Restaurant Website
+# Bhai G & Cafe
 
-> A fully responsive, production-ready restaurant website with a dynamic menu, smart cart system, and a complete multi-method payment gateway — built entirely with vanilla HTML, CSS, and JavaScript.
+Restaurant ordering project with:
 
----
+- storefront frontend in [`index.html`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/index.html)
+- secure ASP.NET Core backend in [`server/`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/server)
+- admin dashboard in [`admin/index.html`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/admin/index.html)
 
-## 📸 Preview
+## Current Backend Status
 
-![Bhai G & Cafe Hero](https://images.unsplash.com/photo-1544025162-d76594e3d3e0?w=1200&q=80)
+Implemented:
 
----
+- menu API and order API
+- PostgreSQL order store integration
+- SQL migration runner
+- legacy JSON-to-PostgreSQL import path
+- JSON-backed fallback persistence when Postgres is not configured
+- COD and online order creation flow
+- Razorpay order creation scaffold
+- Razorpay webhook signature verification
+- email/SMS notification provider hooks
+- admin stats, order list, and status updates
+- frontend public-config awareness so online payment is only enabled when backend keys exist
 
-## ✨ Features
+## Project Structure
 
-### 🍽️ Menu & Discovery
-- Full-page hero section with animated entrance
-- Sticky navigation bar with smooth scroll
-- 15 menu items across 5 categories — Starters, Mains, From the Grill, Desserts, and Drinks
-- Category filter buttons with animated card transitions
-- Item badges — Chef's Pick, Signature, Veg, Spicy, New, Non-Alc
-
-### 🛒 Cart System
-- Slide-in cart drawer from the right
-- Add / remove items with live quantity controls
-- Real-time subtotal, 8% tax, and service charge calculation
-- Cart badge in nav with bounce animation on update
-- Empty state with prompt to browse
-
-### 💳 3-Step Payment Gateway
-
-| Step | Description |
-|------|-------------|
-| **Step 1 — Details** | Name, email, phone, order type (Dine In / Takeaway / Home Delivery), table number, address, and special instructions |
-| **Step 2 — Payment** | Choose from Card, UPI, Digital Wallet, or Cash on Delivery |
-| **Step 3 — Review** | Full order summary, delivery details, and payment confirmation before placing |
-
-### 💰 Payment Methods Supported
-- **💳 Credit / Debit Card** — real-time number formatting, expiry auto-format, CVV, card brand detection (Visa / Mastercard / Amex)
-- **📱 UPI** — UPI ID entry with live verification + shortcut buttons for GPay, PhonePe, Paytm, BHIM
-- **👛 Digital Wallet** — Apple Pay, Google Pay, PayPal, Amazon Pay
-- **💵 Cash on Delivery** — with order confirmation flow
-
-### ⚡ UX & Animations
-- Animated spinner during payment processing
-- Order confirmation screen with unique Order ID
-- Toast notifications for every cart action
-- CSS-only page-load staggered animations
-- Hover effects and micro-interactions throughout
-
----
-
-## 🗂️ Project Structure
-
-```
-Bhai G & Cafe/
-│
-├── index.html          # Single-file application (HTML + CSS + JS)
-└── README.md           # Project documentation
+```text
+Bhai-G-Cafe-Restaurant/
+|-- index.html
+|-- assets/
+|   |-- app.js
+|   |-- menu.json
+|   `-- styles.css
+|-- admin/
+|   `-- index.html
+|-- scripts/
+|   |-- start-backend.ps1
+|   |-- test-webhook.ps1
+|   `-- verify-phase2.ps1
+`-- server/
+    |-- BhaiGCafe.Api.csproj
+    |-- Database/
+    |-- Program.cs
+    |-- appsettings.json
+    |-- appsettings.Development.json
+    |-- appsettings.Local.example.json
+    |-- Models/
+    |-- Options/
+    |-- Properties/
+    `-- Services/
 ```
 
-> This is a single-file project — everything lives in `index.html` with no external dependencies.
+## Run Locally
 
----
+Frontend:
 
-## 🚀 Getting Started
-
-### Option 1 — Open Directly
-Just open `index.html` in any modern browser. No build step, no server required.
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/ember-and-ash.git
-
-# Navigate into the project
-cd Bhai-G-Cafe-Restaurant
-
-# Open in browser
-open index.html        # macOS
-start index.html       # Windows
-xdg-open index.html    # Linux
+```powershell
+python -m http.server 5500
 ```
 
-### Option 2 — Live Server (Recommended for Development)
-If you have VS Code, use the [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) for hot-reload during development.
+Open:
 
----
+```text
+http://127.0.0.1:5500
+```
 
-## 🛠️ Tech Stack
+Backend:
 
-| Technology | Usage |
-|------------|-------|
-| **HTML5** | Semantic structure and layout |
-| **CSS3** | Animations, transitions, CSS variables, Grid & Flexbox |
-| **Vanilla JavaScript** | Cart logic, payment flow, form validation, DOM manipulation |
-| **Google Fonts** | Cormorant Garamond (display) + DM Sans (body) |
-| **Unsplash** | Food photography via CDN |
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\start-backend.ps1
+```
 
-> **Zero dependencies.** No frameworks, no npm, no bundler.
+Default backend URL:
 
----
+```text
+http://localhost:8080
+```
 
-## 💡 How to Customize
+If needed, override the frontend API base before [`assets/app.js`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/assets/app.js):
 
-### Change Restaurant Name & Branding
-Edit the name, tagline, and address directly in `index.html`:
 ```html
-<!-- Hero -->
-<h1>Bhai G <br><em>&amp; Cafe</em></h1>
-<p class="hero-sub">Fire-kissed cuisine · Artisanal ingredients · Soulful ambiance</p>
-
-<!-- Footer -->
-<div>Sudpura Kashganj, Uttar Pradesh · Mon–Sun 9am–10pm</div>
-```
-
-### Change Color Theme
-Update CSS variables at the top of the `<style>` block:
-```css
-:root {
-  --cream:    #f5f0e8;   /* background */
-  --charcoal: #1a1a18;   /* dark / text */
-  --ember:    #c4622d;   /* primary accent */
-  --gold:     #b89a5a;   /* secondary accent */
-}
-```
-
-### Add / Edit Menu Items
-Each menu card follows this pattern:
-```html
-<div class="card"
-  data-cat="mains"
-  data-name="Your Dish Name"
-  data-price="25"
-  data-img="https://your-image-url.com/photo.jpg">
-
-  <div class="card-img" style="background-image:url('...')">
-    <span class="card-badge new">New</span>
-  </div>
-
-  <div class="card-body">
-    <div class="card-category">Mains</div>
-    <div class="card-title">Your Dish Name</div>
-    <div class="card-desc">Short description of the dish.</div>
-    <div class="card-footer">
-      <div class="price">$25 <span>/ plate</span></div>
-      <button class="add-btn" onclick="addToCart(this)">+</button>
-    </div>
-  </div>
-</div>
-```
-
-**Available badge types:**
-```html
-<span class="card-badge new">New</span>      <!-- ember red -->
-<span class="card-badge veg">Veg</span>      <!-- green -->
-<span class="card-badge spicy">Spicy</span>  <!-- dark red -->
-<span class="card-badge">Custom</span>       <!-- charcoal (default) -->
-```
-
-### Adjust Tax & Service Charge
-Find these two functions in the `<script>` block:
-```javascript
-function getTax()   { return getSubtotal() * 0.08; }  // 8% tax
-function getTotal() { return getSubtotal() + getTax() + 2; }  // $2 service charge
-```
-
----
-
-## 🔌 Connecting a Real Payment Gateway
-
-This project uses a **simulated front-end payment flow**. To process real payments, integrate one of these:
-
-| Gateway | Best For | Docs |
-|---------|----------|------|
-| [Stripe](https://stripe.com/docs) | Global card payments | [stripe.com/docs](https://stripe.com/docs) |
-| [Razorpay](https://razorpay.com/docs) | India (UPI, cards, wallets) | [razorpay.com/docs](https://razorpay.com/docs) |
-| [PayPal](https://developer.paypal.com) | Global PayPal & card | [developer.paypal.com](https://developer.paypal.com) |
-| [Square](https://developer.squareup.com) | POS + online | [developer.squareup.com](https://developer.squareup.com) |
-
-**Example — Adding Stripe.js:**
-```html
-<script src="https://js.stripe.com/v3/"></script>
 <script>
-  const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
-  // Replace processPayment() with Stripe's confirmCardPayment()
+  window.BHAI_G_CAFE_API_BASE = "http://localhost:8080";
 </script>
 ```
 
-> ⚠️ Always handle payment processing **server-side** to keep secret keys secure. Never expose secret keys in front-end code.
+## Local Config
 
----
+Use [`server/appsettings.Local.example.json`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/server/appsettings.Local.example.json) as the template for your private local settings.
 
-## 📱 Responsive Design
+Actual local file:
 
-| Breakpoint | Behaviour |
-|------------|-----------|
-| Desktop (> 768px) | Full nav, 3-column menu grid, side-by-side about section |
-| Mobile (≤ 768px) | Hamburger-style nav hidden, 1-column grid, stacked about section, single-column checkout form |
+- [`server/appsettings.Local.json`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/server/appsettings.Local.json)
+- this file is git-ignored
+- keep real secrets only in this file or environment variables
 
----
+Fields you will normally update:
 
-## 🧪 Testing the Payment Flow
+- `ConnectionStrings:Postgres`
+- `Database:ImportLegacyJsonOnStartup`
+- `Payments:Razorpay:KeyId`
+- `Payments:Razorpay:KeySecret`
+- `Payments:Razorpay:WebhookSecret`
+- `Notifications:Email:*`
+- `Notifications:Sms:*`
 
-Use these test details to walk through the full checkout:
+PostgreSQL behavior:
 
-| Field | Value |
-|-------|-------|
-| Card Number | `4242 4242 4242 4242` |
-| Expiry | Any future date (e.g. `12 / 27`) |
-| CVV | Any 3 digits (e.g. `123`) |
-| UPI ID | Any string with `@` (e.g. `test@okaxis`) |
+- if `ConnectionStrings:Postgres` is blank, backend safely falls back to JSON file storage
+- if `ConnectionStrings:Postgres` is set, backend switches to PostgreSQL automatically
+- if `Database:AutoMigrateOnStartup = true`, SQL migrations run during startup
+- if `Database:ImportLegacyJsonOnStartup = true`, legacy JSON orders are imported once when the database is empty
 
----
+Notification auth is configurable:
 
-## 📄 License
+- `AuthHeaderName = "Authorization"` with `AuthScheme = "Bearer"` for standard bearer APIs
+- or set a provider-specific header name such as `x-api-key`
 
-This project is open source and available under the [MIT License](LICENSE).
+## Payment Flow
 
----
+COD:
 
-## 🙌 Acknowledgements
+- frontend posts order to `POST /api/orders`
+- backend saves order immediately
 
-- Food photography by [Unsplash](https://unsplash.com)
-- Typography — [Cormorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) & [DM Sans](https://fonts.google.com/specimen/DM+Sans) via Google Fonts
+Online:
 
----
+- frontend posts order to `POST /api/orders`
+- backend creates Razorpay order if keys are configured
+- frontend opens hosted Razorpay checkout
+- frontend posts Razorpay success data to `POST /api/payments/razorpay/verify`
+- webhook hits `POST /api/payments/webhooks/razorpay`
+- backend verifies signature and marks order paid
 
+Frontend safety behavior:
 
+- if Razorpay keys are missing, Card / UPI / Wallet methods are disabled automatically
+- local card fields are never sent to the backend
+- payment secrets remain server-side only
 
+## Admin Dashboard
+
+Open:
+
+```text
+http://127.0.0.1:5500/admin/index.html
+```
+
+Admin APIs:
+
+- `GET /api/admin/stats`
+- `GET /api/admin/orders`
+- `PATCH /api/admin/orders/{orderId}/status`
+
+Required header:
+
+```text
+X-Admin-Key: <your-admin-key>
+```
+
+## Verification
+
+Build verification:
+
+```powershell
+cd server
+dotnet build
+```
+
+Current fallback verification:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-phase2.ps1
+```
+
+If Razorpay test keys are configured and you want the script to simulate a successful server-side verification:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-phase2.ps1 -RazorpayKeySecret "<your-test-key-secret>"
+```
+
+PostgreSQL activation check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\verify-postgres.ps1
+```
+
+What this currently verifies:
+
+- API starts
+- health endpoint responds
+- menu endpoint responds
+- order creation works
+- webhook verification works
+- admin endpoints work
+
+When PostgreSQL is configured, the same API flow will use DB-backed persistence instead of JSON fallback.
+
+Local webhook verification:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\test-webhook.ps1 -WebhookSecret "dev-webhook-secret" -OrderId "BG-XXXXXXX"
+```
+
+## Verified On This Machine
+
+Already verified:
+
+- `.NET 8 SDK` available
+- backend restore/build succeeds
+- PostgreSQL package restore succeeds
+- `GET /api/health`
+- `GET /api/menu`
+- `GET /api/config/public`
+- `POST /api/orders` for COD
+- `POST /api/orders` for online flow
+- local webhook signature verification
+- admin stats/orders endpoints
+
+Current observed storage on this machine:
+
+- `json-file`
+- reason: local PostgreSQL connection string is still blank
+
+## To Enable PostgreSQL
+
+1. Install PostgreSQL locally or use a hosted PostgreSQL instance.
+2. Open [`server/appsettings.Local.json`](/C:/Users/Bhoopendra%20Singh/Projects/Bhai-G-Cafe-Restaurant/server/appsettings.Local.json).
+3. Set `ConnectionStrings.Postgres`.
+4. Optionally set `Database.ImportLegacyJsonOnStartup` to `true` for the first startup if you want existing JSON orders imported.
+5. Start the backend again.
+6. Check `GET /api/health` and confirm `storage.provider` becomes `postgres`.
+
+Example connection string:
+
+```text
+Host=localhost;Port=5432;Database=bhaigcafe;Username=postgres;Password=your-strong-password;SSL Mode=Prefer;Trust Server Certificate=true
+```
+
+## Important Security Notes
+
+- do not put Razorpay secret keys in frontend code
+- do not commit real `appsettings.Local.json`
+- do not commit real PostgreSQL passwords
+- keep webhook secret server-side only
+- admin dashboard is still API-key based, so production should move to proper auth
+- current notification hooks are provider-agnostic HTTP integrations and should be pointed only to trusted APIs

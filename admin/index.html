@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bhai G Cafe Admin</title>
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    body { min-height: 100vh; background: linear-gradient(180deg, #f4eee4 0%, #e7dcc7 100%); }
+    .admin-shell { padding: 48px 5%; }
+    .admin-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin: 24px 0; }
+    .admin-card, .admin-panel { background: rgba(255,255,255,0.8); border: 1px solid rgba(26,26,24,0.08); border-radius: 16px; padding: 24px; box-shadow: 0 20px 60px rgba(26,26,24,0.08); }
+    .admin-stat { font-size: 2rem; font-family: "Cormorant Garamond", serif; margin-top: 8px; }
+    .admin-toolbar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .admin-input { flex: 1 1 260px; min-height: 48px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(26,26,24,0.14); }
+    .admin-btn { min-height: 48px; padding: 0 18px; border: none; border-radius: 10px; background: #c4622d; color: #fff; font-weight: 600; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th, .admin-table td { text-align: left; padding: 14px 10px; border-bottom: 1px solid rgba(26,26,24,0.08); font-size: 14px; vertical-align: top; }
+    .admin-table th { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b6455; }
+    .status-pill { display: inline-block; padding: 6px 10px; border-radius: 999px; background: rgba(196,98,45,0.1); color: #a8521f; font-size: 12px; font-weight: 700; text-transform: capitalize; }
+    .inline-select { min-height: 40px; border-radius: 8px; border: 1px solid rgba(26,26,24,0.14); padding: 8px 10px; }
+  </style>
+</head>
+<body>
+  <main class="admin-shell">
+    <div class="section-label">Operations Desk</div>
+    <h1 class="section-title">Bhai G Cafe Admin</h1>
+    <p style="max-width:700px;color:#6b6455;margin-top:12px;">Monitor orders, review revenue, and update kitchen or delivery status from one place. This dashboard uses the secure admin API key header and should never be exposed publicly without authentication.</p>
+
+    <section class="admin-grid" id="statsGrid">
+      <article class="admin-card"><div>Total Orders</div><div class="admin-stat" id="statOrders">0</div></article>
+      <article class="admin-card"><div>Paid Orders</div><div class="admin-stat" id="statPaid">0</div></article>
+      <article class="admin-card"><div>Pending Orders</div><div class="admin-stat" id="statPending">0</div></article>
+      <article class="admin-card"><div>Revenue</div><div class="admin-stat" id="statRevenue">INR 0</div></article>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-toolbar">
+        <input class="admin-input" id="apiBase" value="http://localhost:8080" placeholder="API Base URL">
+        <input class="admin-input" id="adminKey" value="dev-admin-key" placeholder="Admin API Key">
+        <button class="admin-btn" id="refreshButton" type="button">Refresh Orders</button>
+      </div>
+      <div style="overflow:auto">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Payment</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody id="ordersBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ordersBody = document.getElementById("ordersBody");
+    const statOrders = document.getElementById("statOrders");
+    const statPaid = document.getElementById("statPaid");
+    const statPending = document.getElementById("statPending");
+    const statRevenue = document.getElementById("statRevenue");
+    const refreshButton = document.getElementById("refreshButton");
+    const apiBase = document.getElementById("apiBase");
+    const adminKey = document.getElementById("adminKey");
+
+    refreshButton.addEventListener("click", loadAdminData);
+    loadAdminData();
+
+    async function loadAdminData() {
+      const baseUrl = apiBase.value.replace(/\/$/, "");
+      const headers = { "X-Admin-Key": adminKey.value.trim() };
+
+      const [statsResponse, ordersResponse] = await Promise.all([
+        fetch(baseUrl + "/api/admin/stats", { headers }),
+        fetch(baseUrl + "/api/admin/orders", { headers })
+      ]);
+
+      if (!statsResponse.ok || !ordersResponse.ok) {
+        alert("Admin API request failed. Check API URL and admin key.");
+        return;
+      }
+
+      const stats = await statsResponse.json();
+      const orders = await ordersResponse.json();
+
+      statOrders.textContent = stats.totalOrders;
+      statPaid.textContent = stats.paidOrders;
+      statPending.textContent = stats.pendingOrders;
+      statRevenue.textContent = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR" }).format(stats.revenue || 0);
+
+      ordersBody.innerHTML = orders.map((order) => `
+        <tr>
+          <td><strong>${escapeHtml(order.publicOrderId)}</strong><br><span style="color:#6b6455">${new Date(order.createdAtUtc).toLocaleString()}</span></td>
+          <td>${escapeHtml(order.customer.fullName)}<br><span style="color:#6b6455">${escapeHtml(order.customer.phone)}</span></td>
+          <td>${order.items.map(item => `${escapeHtml(item.name)} x ${item.quantity}`).join("<br>")}</td>
+          <td><span class="status-pill">${escapeHtml(order.payment.status)}</span></td>
+          <td>${new Intl.NumberFormat("en-IN", { style: "currency", currency: order.currency || "INR" }).format(order.pricing.total)}</td>
+          <td><span class="status-pill">${escapeHtml(order.status)}</span></td>
+          <td>
+            <select class="inline-select" data-order-id="${escapeHtml(order.publicOrderId)}">
+              ${statusOptions(order.status)}
+            </select>
+            <button class="admin-btn" style="margin-top:8px" type="button" onclick="updateStatus('${escapeJs(order.publicOrderId)}', this.previousElementSibling.value)">Save</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    async function updateStatus(orderId, status) {
+      const baseUrl = apiBase.value.replace(/\/$/, "");
+      const response = await fetch(baseUrl + "/api/admin/orders/" + encodeURIComponent(orderId) + "/status", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Admin-Key": adminKey.value.trim()
+        },
+        body: JSON.stringify({ status })
+      });
+
+      if (!response.ok) {
+        alert("Could not update order status.");
+        return;
+      }
+
+      await loadAdminData();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function escapeJs(value) {
+      return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    }
+
+    function statusOptions(currentStatus) {
+      const statuses = ["pending", "confirmed", "preparing", "ready", "out_for_delivery", "completed", "cancelled"];
+      return statuses.map(status => `<option value="${status}" ${status === currentStatus ? "selected" : ""}>${status}</option>`).join("");
+    }
+  </script>
+</body>
+</html>

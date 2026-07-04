@@ -1,0 +1,6 @@
+.chrome-debug/
+.chrome-headless/
+server/App_Data/
+server/appsettings.Local.json
+server/bin/
+server/obj/

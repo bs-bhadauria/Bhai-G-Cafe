@@ -1,0 +1,164 @@
+[
+  {
+    "id": "smoked-burrata",
+    "category": "starters",
+    "categoryLabel": "Starters",
+    "name": "Smoked Burrata & Heirloom Tomatoes",
+    "description": "Cold-smoked burrata on heirloom tomatoes, drizzled with aged balsamic and basil oil.",
+    "price": 14,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1603073163308-9654c3fb70b5?w=600&q=80",
+    "badge": { "label": "Chef's Pick", "tone": "new" }
+  },
+  {
+    "id": "crispy-polenta",
+    "category": "starters",
+    "categoryLabel": "Starters",
+    "name": "Crispy Polenta Bites",
+    "description": "Golden polenta cubes with whipped ricotta, sun-dried tomato tapenade, and fresh micro herbs.",
+    "price": 11,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1625944230945-1b7dd3b949ab?w=600&q=80",
+    "badge": { "label": "Veg", "tone": "veg" }
+  },
+  {
+    "id": "charred-prawn",
+    "category": "starters",
+    "categoryLabel": "Starters",
+    "name": "Charred Prawn Skewers",
+    "description": "Tiger prawns in chilli butter, flash-grilled over open flame, served with mango aioli.",
+    "price": 16,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80",
+    "badge": { "label": "Spicy", "tone": "spicy" }
+  },
+  {
+    "id": "lobster-risotto",
+    "category": "mains",
+    "categoryLabel": "Mains",
+    "name": "Saffron Lobster Risotto",
+    "description": "Arborio rice in lobster bisque, topped with grilled lobster tail and saffron foam.",
+    "price": 38,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=600&q=80",
+    "badge": { "label": "New", "tone": "new" }
+  },
+  {
+    "id": "mushroom-wellington",
+    "category": "mains",
+    "categoryLabel": "Mains",
+    "name": "Wild Mushroom Wellington",
+    "description": "Forest mushroom duxelles in puff pastry with truffle jus and roasted root vegetables.",
+    "price": 26,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80",
+    "badge": { "label": "Veg", "tone": "veg" }
+  },
+  {
+    "id": "short-rib",
+    "category": "mains",
+    "categoryLabel": "Mains",
+    "name": "Slow-Braised Short Rib",
+    "description": "48-hour braised beef short rib with smoky chipotle glaze, creamed mash, and pickled slaw.",
+    "price": 34,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80",
+    "badge": { "label": "Spicy", "tone": "spicy" }
+  },
+  {
+    "id": "ribeye",
+    "category": "grill",
+    "categoryLabel": "From the Grill",
+    "name": "Ember-Kissed Ribeye",
+    "description": "28-day dry-aged 300g ribeye over wood ember, with bone marrow butter and house jus.",
+    "price": 52,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1544025162-d76594e3d3e0?w=600&q=80",
+    "badge": { "label": "Signature", "tone": "new" }
+  },
+  {
+    "id": "lemon-herb-chicken",
+    "category": "grill",
+    "categoryLabel": "From the Grill",
+    "name": "Spatchcock Lemon Herb Chicken",
+    "description": "Free-range chicken basted in preserved lemon and herb butter. Served with chimichurri.",
+    "price": 29,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600&q=80"
+  },
+  {
+    "id": "cauliflower-steak",
+    "category": "grill",
+    "categoryLabel": "From the Grill",
+    "name": "Grilled Cauliflower Steak",
+    "description": "Whole cauliflower with harissa yogurt, pomegranate, toasted pine nuts, and fresh mint.",
+    "price": 22,
+    "unitLabel": "plate",
+    "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=600&q=80",
+    "badge": { "label": "Veg", "tone": "veg" }
+  },
+  {
+    "id": "lava-cake",
+    "category": "desserts",
+    "categoryLabel": "Desserts",
+    "name": "Salted Caramel Lava Cake",
+    "description": "Dark chocolate fondant with molten salted caramel centre and vanilla bean gelato.",
+    "price": 13,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80",
+    "badge": { "label": "Must Try", "tone": "new" }
+  },
+  {
+    "id": "yuzu-panna-cotta",
+    "category": "desserts",
+    "categoryLabel": "Desserts",
+    "name": "Yuzu Panna Cotta",
+    "description": "Silky yuzu panna cotta with blood orange compote and white chocolate shards.",
+    "price": 11,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80",
+    "badge": { "label": "Veg", "tone": "veg" }
+  },
+  {
+    "id": "cheesecake",
+    "category": "desserts",
+    "categoryLabel": "Desserts",
+    "name": "Ash & Honey Cheesecake",
+    "description": "Baked cheesecake with activated charcoal crust, raw honey drizzle, and candied walnuts.",
+    "price": 12,
+    "unitLabel": "serving",
+    "image": "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&q=80"
+  },
+  {
+    "id": "smoked-negroni",
+    "category": "drinks",
+    "categoryLabel": "Drinks",
+    "name": "Ember Smoked Negroni",
+    "description": "Classic Negroni finished with applewood smoke, served in a theatrical smoke-filled glass.",
+    "price": 16,
+    "unitLabel": "glass",
+    "image": "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&q=80",
+    "badge": { "label": "Signature", "tone": "new" }
+  },
+  {
+    "id": "charcoal-lemonade",
+    "category": "drinks",
+    "categoryLabel": "Drinks",
+    "name": "Charcoal Lemonade",
+    "description": "Cold-pressed lemonade with activated charcoal, ginger, and a float of rose water.",
+    "price": 8,
+    "unitLabel": "glass",
+    "image": "https://images.unsplash.com/photo-1543253687-c931c8e01820?w=600&q=80",
+    "badge": { "label": "Non-Alc", "tone": "veg" }
+  },
+  {
+    "id": "turmeric-latte",
+    "category": "drinks",
+    "categoryLabel": "Drinks",
+    "name": "Gold Turmeric Latte",
+    "description": "Golden milk with turmeric, oat milk, cardamom, and black pepper. Warm or iced.",
+    "price": 7,
+    "unitLabel": "cup",
+    "image": "https://images.unsplash.com/photo-1560508180-03f285f67ded?w=600&q=80"
+  }
+]
